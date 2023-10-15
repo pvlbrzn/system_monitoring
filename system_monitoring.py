@@ -13,6 +13,7 @@ def cpu_info(): # This function returns information about CPU
                current=data2.current)
     return res
 
+
 def memory_info(): # This function returns information about your memory
     res = {}
     data = psutil.virtual_memory() # This modul outputs info about memory
@@ -21,6 +22,7 @@ def memory_info(): # This function returns information about your memory
                percent=data.percent,
                free=data.free)
     return res
+
 
 def net_info(): # It's function return information about network
     res = {}
@@ -33,25 +35,30 @@ def net_info(): # It's function return information about network
                errout=data.errout)
     return res
 
+
 def battary_power_left(): # This function retutn info about battery power left
     battery = psutil.sensors_battery() 
     power_left = battery.percent
     return power_left
+
 
 def battary_secsleft(): # This function retutns info about battery second left
     battery = psutil.sensors_battery()
     secsleft = battery.secsleft
     return secsleft
 
+
 def secs2hours(secs): # This function converts time format
     mm, ss = divmod(secs, 60)
     hh, mm = divmod(mm, 60)
     return "%d:%02d:%02d" % (hh, mm, ss)
 
+
 def battary_power(): # This function returns info about battary charging (True/False)
     battery = psutil.sensors_battery()
     bat_power = battery.power_plugged
     return bat_power
+
 
 def info_process(): #This function returns info about system process
     res = []
