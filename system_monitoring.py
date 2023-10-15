@@ -87,7 +87,7 @@ def show(cpu=None, memory=None, net=None, secs=None, charge=None, bpower=None, p
 
     battary_title = ("{:^54}").format("Battery status information")
     bat_par = (("|{:<25}"+"{:>25}|").format(charge, secs))
-    electricity = (("|{:<53}|".format(bpower)))
+    electricity = (("|{:_^55}|".format(bpower)))
 
     processes_title = ("{:^120}").format("***All system processes***")
     line = "_"*114
@@ -120,9 +120,9 @@ def main():
     cpu_data = cpu_info()
     memory_data = memory_info()
     net_data = net_info()
-    battery_charge = "Battery power left = |{}%|".format(battary_power_left())
-    battery_secs = "Time left = |{}|".format(secs2hours(battary_secsleft()))
-    batpow = "Power - |{}|".format(battary_power())
+    battery_charge = "Battery power left = <<{}%>>".format(battary_power_left())
+    battery_secs = "Time left = <<{}>>".format(secs2hours(battary_secsleft()))
+    batpow = "Power - <<{}>>".format(battary_power())
     info_proc = info_process()
     
     #call the function show() with all methods(functions)
