@@ -1,2 +1,2 @@
 # system_monitoring
-![Снимок экрана от 2023-10-13 17-56-37](https://github.com/pvlbrzn/system_monitoring/assets/146545294/95ef44a9-625c-4624-adc9-81916e0e8008)
+![Снимок экрана от 2023-10-15 19-25-44](https://github.com/pvlbrzn/system_monitoring/assets/146545294/162277ff-e353-48bf-98d1-d4e7a6e1be25)
