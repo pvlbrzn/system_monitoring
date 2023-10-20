@@ -44,13 +44,13 @@ def net_info():  # It's function return information about network
 
 def battary_power_left():  # This function retutn info about battery power left
     battery = psutil.sensors_battery()
-    power_left = battery.percent
+    power_left = "Battery power left = <<{}%>>".format(battery.percent)
     return power_left
 
 
 def battary_secsleft():  # This function retutns info about battery second left
     battery = psutil.sensors_battery()
-    secsleft = battery.secsleft
+    secsleft = "Time left = <<{}>>".format(secs2hours(battery.secsleft))
     return secsleft
 
 
@@ -62,7 +62,7 @@ def secs2hours(secs):  # This function converts time format
 
 def battary_power():  # This function returns info about battary charging (True/False)
     battery = psutil.sensors_battery()
-    bat_power = battery.power_plugged
+    bat_power = "Power - <<{}>>".format(battery.power_plugged)
     return bat_power
 
 
@@ -104,7 +104,7 @@ def show(
 
     battary_title = ("{:^54}").format("Battery status information")
     bat_par = ("|{:<25}" + "{:>25}|").format(charge, secs)
-    electricity = "|{:_^56}|".format(bpower)
+    electricity = "|{:_^55}|".format(bpower)
 
     processes_title = ("{:^120}").format("***All system processes***")
     line = "_" * 114
@@ -139,9 +139,9 @@ def main():
     cpu_data = cpu_info()
     memory_data = memory_info()
     net_data = net_info()
-    battery_charge = "Battery power left = <<{}%>>".format(battary_power_left())
-    battery_secs = "Time left = <<{}>>".format(secs2hours(battary_secsleft()))
-    batpow = "Power - <<{}>>".format(battary_power())
+    battery_charge = battary_power_left()
+    battery_secs = battary_secsleft()
+    batpow = battary_power()
     info_proc = info_process()
 
     # call the function show() with all methods(functions)
