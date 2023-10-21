@@ -1,22 +1,8 @@
 import psutil
-import json
-from functools import wraps
 
 # this skript is static version htop
 
 
-def save_exit_data(func):
-    @wraps(func)
-    def json_saver():
-        res_func = func()
-        with open("File_data.json", "w") as file:
-            json.dump(res_func, file, indent=4)
-        return file
-
-    return json_saver
-
-
-@save_exit_data
 def cpu_info():  # This function returns information about CPU
     res = {}
     data1 = psutil.cpu_times()  # This modul outputs info about worktime CPU
@@ -31,7 +17,6 @@ def cpu_info():  # This function returns information about CPU
     return res
 
 
-@save_exit_data
 def memory_info():  # This function returns information about your memory
     res = {}
     data = psutil.virtual_memory()  # This modul outputs info about memory

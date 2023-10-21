@@ -7,14 +7,12 @@ def save_res_json(func):
     @wraps(func)
     def func_writer():
         res_func = func()
-        with open ("Function_return.json", "w") as file:
-                json.dump(res_func, file, indent=4)
+        with open("Function_return.json", "w") as file:
+            json.dump(res_func, file, indent=4)
         res = func()
         return res
-    
+
     return func_writer
-
-
 
 
 @save_res_json
@@ -31,9 +29,11 @@ def cpu_info():  # This function returns information about CPU
     )
     return res
 
+
 print(cpu_info())
 
 print(cpu_info.__name__)
+
 
 def show(
     cpu=None, memory=None, net=None, secs=None, charge=None, bpower=None, proc=None
@@ -43,7 +43,7 @@ def show(
         "user_time", "system_time", "idle_time", "guest_time", "current"
     )
     cpu_tamplate = "|{user_time:_^16}|{sys_time:_^16}|{idle_time:_^16}|{guest_time:_^16}|{current:_^16.5}|"
-    
+
     print("\n\n")
     print(cpu_title)
     print(cpu_sample)
