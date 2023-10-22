@@ -1,0 +1,19 @@
+{
+    "net_info": {
+        "sent": 11313551,
+        "recv": 20734813,
+        "p_sent": 39349,
+        "p_recv": 47935,
+        "errin": 0,
+        "errout": 0
+    }
+,
+    "net_info": {
+        "sent": 11542419,
+        "recv": 20836770,
+        "p_sent": 39891,
+        "p_recv": 48515,
+        "errin": 0,
+        "errout": 0
+    }
+}

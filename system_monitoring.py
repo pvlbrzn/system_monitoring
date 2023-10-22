@@ -9,7 +9,7 @@ def save_res_json(func):
         res_func = func()
         data = {func.__name__: res_func}
         str_data = json.dumps(data, indent=4)
-        with open("Function_return.json", "a") as file:
+        with open(f"{func.__name__}.json", "a") as file:
             size = file.seek(0, 2)
             if size == 0:
                 file.write(str_data)
