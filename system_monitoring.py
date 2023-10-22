@@ -1,8 +1,30 @@
+import json
 import psutil
+from functools import wraps
+
+
+def save_res_json(func):
+    @wraps(func)
+    def func_writer():
+        res_func = func()
+        data = {func.__name__: res_func}
+        str_data = json.dumps(data, indent=4)
+        with open("Function_return.json", "a") as file:
+            size = file.seek(0, 2)
+            if size == 0:
+                file.write(str_data)
+            else:
+                file.seek(size - 1)
+                file.truncate()
+                file.write(",")
+                file.write(str_data[1:])
+        return func()
+
+    return func_writer
+
 
 # this skript is static version htop
-
-
+@save_res_json
 def cpu_info():  # This function returns information about CPU
     res = {}
     data1 = psutil.cpu_times()  # This modul outputs info about worktime CPU
@@ -17,6 +39,7 @@ def cpu_info():  # This function returns information about CPU
     return res
 
 
+@save_res_json
 def memory_info():  # This function returns information about your memory
     res = {}
     data = psutil.virtual_memory()  # This modul outputs info about memory
@@ -26,6 +49,7 @@ def memory_info():  # This function returns information about your memory
     return res
 
 
+@save_res_json
 def net_info():  # It's function return information about network
     res = {}
     data = (

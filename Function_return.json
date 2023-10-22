@@ -1,7 +1,49 @@
 {
-    "user_time": 2308.97,
-    "sys_time": 399.4,
-    "idle_time": 37291.78,
-    "guest_time": 0.0,
-    "current": 2592.002
+    "cpu_info": {
+        "user_time": 2174.54,
+        "sys_time": 370.82,
+        "idle_time": 24018.92,
+        "guest_time": 0.0,
+        "current": 2592.002
+    }
+,
+    "memory_info": {
+        "total": 8317988864,
+        "avail": 4208521216,
+        "percent": 49.4,
+        "free": 1782460416
+    }
+,
+    "net_info": {
+        "sent": 5692038,
+        "recv": 13550011,
+        "p_sent": 17747,
+        "p_recv": 23768,
+        "errin": 0,
+        "errout": 0
+    }
+,
+    "cpu_info": {
+        "user_time": 2184.25,
+        "sys_time": 372.26,
+        "idle_time": 24083.66,
+        "guest_time": 0.0,
+        "current": 2592.002
+    }
+,
+    "memory_info": {
+        "total": 8317988864,
+        "avail": 4198866944,
+        "percent": 49.5,
+        "free": 1772630016
+    }
+,
+    "net_info": {
+        "sent": 5730804,
+        "recv": 13561369,
+        "p_sent": 17808,
+        "p_recv": 23833,
+        "errin": 0,
+        "errout": 0
+    }
 }
