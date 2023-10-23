@@ -12,4 +12,39 @@
         "percent": 50.2,
         "free": 1664593920
     }
+,
+    "memory_info": {
+        "total": 8317992960,
+        "avail": 6178177024,
+        "percent": 25.7,
+        "free": 4472094720
+    }
+,
+    "memory_info": {
+        "total": 8317992960,
+        "avail": 6132105216,
+        "percent": 26.3,
+        "free": 4424515584
+    }
+,
+    "memory_info": {
+        "total": 8317992960,
+        "avail": 6141546496,
+        "percent": 26.2,
+        "free": 4433756160
+    }
+,
+    "memory_info": {
+        "total": 8317992960,
+        "avail": 6153494528,
+        "percent": 26.0,
+        "free": 4445585408
+    }
+,
+    "memory_info": {
+        "total": 8317992960,
+        "avail": 6123106304,
+        "percent": 26.4,
+        "free": 4415041536
+    }
 }

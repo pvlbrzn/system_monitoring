@@ -18,7 +18,7 @@ def save_res_json(func):
                 file.truncate()
                 file.write(",")
                 file.write(str_data[1:])
-        return func()
+        return res_func
 
     return func_writer
 
@@ -107,7 +107,7 @@ def show(
     cpu_sample = ("|{:*^16}" * 4 + "|{:*^16}|").format(
         "user_time", "system_time", "idle_time", "guest_time", "current"
     )
-    cpu_tamplate = "|{user_time:_^16}|{sys_time:_^16}|{idle_time:_^16}|{guest_time:_^16}|{current:_^16.3}|"
+    cpu_tamplate = "|{user_time:_^16}|{sys_time:_^16}|{idle_time:_^16}|{guest_time:_^16}|{current:_^16.5}|"
 
     memory_title = ("{:^80}").format("Memory information")
     memory_sample = ("|{:*^20}" * 3 + "|{:*^20}|").format(
@@ -134,24 +134,17 @@ def show(
     line = "_" * 114
 
     print("\n\n")
-    print(cpu_title)
-    print(cpu_sample)
-    print(cpu_tamplate.format(**cpu))
-    print("\n")
-    print(memory_title)
-    print(memory_sample)
-    print(memory_tamplate.format(**memory))
-    print("\n")
-    print(net_title)
-    print(net_sample)
-    print(net_tamplate.format(**net))
-    print("\n")
-    print(battary_title)
-    print(bat_par)
-    print(electricity)
-    print("\n")
-    print(processes_title)
-    print(line)
+    print(cpu_title, cpu_sample, cpu_tamplate.format(**cpu), sep="\n", end="\n\n")
+    print(
+        memory_title,
+        memory_sample,
+        memory_tamplate.format(**memory),
+        sep="\n",
+        end="\n\n",
+    )
+    print(net_title, net_sample, net_tamplate.format(**net), sep="\n", end="\n\n")
+    print(battary_title, bat_par, electricity, sep="\n", end="\n\n\n")
+    print(processes_title, line, sep="\n")
     for n in proc:
         output_inf = (
             "PID {pid:>5} | process name: {name:>50} | user name : {username:>22} |"
