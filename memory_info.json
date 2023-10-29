@@ -1,50 +1,8 @@
 {
     "memory_info": {
-        "total": 8317988864,
-        "avail": 4151361536,
-        "percent": 50.1,
-        "free": 1673338880
-    }
-,
-    "memory_info": {
-        "total": 8317988864,
-        "avail": 4143022080,
-        "percent": 50.2,
-        "free": 1664593920
-    }
-,
-    "memory_info": {
-        "total": 8317992960,
-        "avail": 6178177024,
-        "percent": 25.7,
-        "free": 4472094720
-    }
-,
-    "memory_info": {
-        "total": 8317992960,
-        "avail": 6132105216,
-        "percent": 26.3,
-        "free": 4424515584
-    }
-,
-    "memory_info": {
-        "total": 8317992960,
-        "avail": 6141546496,
-        "percent": 26.2,
-        "free": 4433756160
-    }
-,
-    "memory_info": {
-        "total": 8317992960,
-        "avail": 6153494528,
-        "percent": 26.0,
-        "free": 4445585408
-    }
-,
-    "memory_info": {
-        "total": 8317992960,
-        "avail": 6123106304,
-        "percent": 26.4,
-        "free": 4415041536
+        "total": 8317984768,
+        "avail": 849240064,
+        "percent": 89.8,
+        "free": 136663040
     }
 }

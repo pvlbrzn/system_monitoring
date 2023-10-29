@@ -1,63 +1,9 @@
 {
     "net_info": {
-        "sent": 11313551,
-        "recv": 20734813,
-        "p_sent": 39349,
-        "p_recv": 47935,
-        "errin": 0,
-        "errout": 0
-    }
-,
-    "net_info": {
-        "sent": 11542419,
-        "recv": 20836770,
-        "p_sent": 39891,
-        "p_recv": 48515,
-        "errin": 0,
-        "errout": 0
-    }
-,
-    "net_info": {
-        "sent": 3669416,
-        "recv": 8181884,
-        "p_sent": 7490,
-        "p_recv": 11847,
-        "errin": 0,
-        "errout": 0
-    }
-,
-    "net_info": {
-        "sent": 3919897,
-        "recv": 8291900,
-        "p_sent": 7935,
-        "p_recv": 12368,
-        "errin": 0,
-        "errout": 0
-    }
-,
-    "net_info": {
-        "sent": 3946149,
-        "recv": 8313723,
-        "p_sent": 8003,
-        "p_recv": 12443,
-        "errin": 0,
-        "errout": 0
-    }
-,
-    "net_info": {
-        "sent": 3958993,
-        "recv": 8321729,
-        "p_sent": 8031,
-        "p_recv": 12476,
-        "errin": 0,
-        "errout": 0
-    }
-,
-    "net_info": {
-        "sent": 3976865,
-        "recv": 8330582,
-        "p_sent": 8067,
-        "p_recv": 12516,
+        "sent": 29582915,
+        "recv": 168857358,
+        "p_sent": 121874,
+        "p_recv": 203184,
         "errin": 0,
         "errout": 0
     }

@@ -9,168 +9,186 @@ def save_res_json(func):
         res_func = func()
         data = {func.__name__: res_func}
         str_data = json.dumps(data, indent=4)
-        with open(f"{func.__name__}.json", "a") as file:
-            size = file.seek(0, 2)
-            if size == 0:
-                file.write(str_data)
-            else:
-                file.seek(size - 1)
-                file.truncate()
-                file.write(",")
-                file.write(str_data[1:])
+        with open(f"{func.__name__}.json", "w") as file:
+            file.write(str_data)
         return res_func
 
     return func_writer
 
 
 # this skript is static version htop
-@save_res_json
-def cpu_info():  # This function returns information about CPU
-    res = {}
-    data1 = psutil.cpu_times()  # This modul outputs info about worktime CPU
-    data2 = psutil.cpu_freq()  # This modul outputs info abour frequency CPU
-    res.update(
-        user_time=data1.user,
-        sys_time=data1.system,
-        idle_time=data1.idle,
-        guest_time=data1.guest,
-        current=data2.current,
-    )
-    return res
 
 
-@save_res_json
-def memory_info():  # This function returns information about your memory
-    res = {}
-    data = psutil.virtual_memory()  # This modul outputs info about memory
-    res.update(
-        total=data.total, avail=data.available, percent=data.percent, free=data.free
-    )
-    return res
+class Cpu:
+    def get_data(self):
+        self.res_cpu = {}
+        data1 = psutil.cpu_times()  # This modul outputs info about worktime CPU
+        data2 = psutil.cpu_freq()  # This modul outputs info abour frequency CPU
+        self.res_cpu.update(
+            user_time=data1.user,
+            sys_time=data1.system,
+            idle_time=data1.idle,
+            guest_time=data1.guest,
+            current=data2.current,
+        )
+
+    def __str__(self):
+        cpu_tamplate = "|{user_time:_^16}|{sys_time:_^16}|{idle_time:_^16}|{guest_time:_^16}|{current:_^16.5}|"
+
+        str1 = ("{:^80}").format("CPU information")
+        str2 = ("|{:*^16}" * 4 + "|{:*^16}|").format(
+            "user_time", "system_time", "idle_time", "guest_time", "current"
+        )
+        str3 = cpu_tamplate.format(**self.res_cpu)
+        return f"\n{str1}\n{str2}\n{str3}"
 
 
-@save_res_json
-def net_info():  # It's function return information about network
-    res = {}
-    data = (
-        psutil.net_io_counters()
-    )  # It's modul output info about info received and sent on the Internet
-    res.update(
-        sent=data.bytes_sent,
-        recv=data.bytes_recv,
-        p_sent=data.packets_sent,
-        p_recv=data.packets_recv,
-        errin=data.errin,
-        errout=data.errout,
-    )
-    return res
+class Memory:
+    def get_data(self):  # This function returns information about your memory
+        self.res_memory = {}
+        data = psutil.virtual_memory()  # This modul outputs info about memory
+        self.res_memory.update(
+            total=data.total, avail=data.available, percent=data.percent, free=data.free
+        )
+
+    def __str__(self):
+        memory_tamplate = "|{total:_^20}|{avail:_^20}|{percent:_^20}|{free:_^20}|"
+
+        str1 = ("{:^80}").format("Memory information")
+        str2 = ("|{:*^20}" * 3 + "|{:*^20}|").format(
+            "total_memory", "available_memory", "percentage_usage", "free_memory"
+        )
+        str3 = memory_tamplate.format(**self.res_memory)
+        return f"\n{str1}\n{str2}\n{str3}"
 
 
-def battary_power_left():  # This function retutn info about battery power left
-    battery = psutil.sensors_battery()
-    power_left = "Battery power left = <<{}%>>".format(battery.percent)
-    return power_left
+class Network:
+    def get_data(self):
+        self.res_net = {}
+        data = psutil.net_io_counters()
+        self.res_net.update(
+            sent=data.bytes_sent,
+            recv=data.bytes_recv,
+            p_sent=data.packets_sent,
+            p_recv=data.packets_recv,
+            errin=data.errin,
+            errout=data.errout,
+        )
+
+    def __str__(self):
+        tamplate = "|{sent:_^14}|{recv:_^14}|{p_sent:_^14}|{p_recv:_^14}|{errin:_^14}|{errout:_^14}|"
+
+        str1 = ("{:^84}").format("System-wide network In/Out statistics")
+        str2 = ("|{:*^14}" * 5 + "|{:*^14}|").format(
+            "bytes_sent",
+            "bytes_recv",
+            "packets_sent",
+            "packets_recv",
+            "error_In",
+            "error_Out",
+        )
+        str3 = tamplate.format(**self.res_net)
+
+        return f"\n{str1}\n{str2}\n{str3}"
 
 
-def battary_secsleft():  # This function retutns info about battery second left
-    battery = psutil.sensors_battery()
-    secsleft = "Time left = <<{}>>".format(secs2hours(battery.secsleft))
-    return secsleft
+class Battary:
+    def get_data(self):
+        self.battary = psutil.sensors_battery()
+
+    def __str__(self):
+        @staticmethod
+        def secs2hours(secs):  # This function converts time format
+            mm, ss = divmod(secs, 60)
+            hh, mm = divmod(mm, 60)
+            return "%d:%02d:%02d" % (hh, mm, ss)
+
+        power_left = "Battery power left = <<{}%>>".format(self.battary.percent)
+        secsleft = "Time left = <<{}>>".format(secs2hours(self.battary.secsleft))
+        bat_power = "Power - <<{}>>".format(self.battary.power_plugged)
+
+        str1 = ("{:^54}").format("Battery status information")
+        str2 = ("|{:<30}" + "{:>30}|").format(power_left, secsleft)
+        str3 = ("|{:_^60}|").format(bat_power)
+
+        return f"\n{str1}\n{str2}\n{str3}"
 
 
-def secs2hours(secs):  # This function converts time format
-    mm, ss = divmod(secs, 60)
-    hh, mm = divmod(mm, 60)
-    return "%d:%02d:%02d" % (hh, mm, ss)
+class Process:
+    def get_data(self):
+        self.res_proc = []
+        for proc in psutil.process_iter(
+            ["pid", "name", "username"]
+        ):  # enumerate all processes from a module
+            self.res_proc.append(proc.info)
+
+    def __str__(self):
+        str1 = ("{:^120}").format("***All system processes***")
+        str2 = "_" * 114
+
+        return f"\n\n{str1}\n{str2}"
+
+    def print_proc(self):
+        for n in self.res_proc:
+            output_inf = (
+                "PID {pid:>5} | process name: {name:>50} | user name : {username:>22} |"
+            )
+            print(output_inf.format(**n))
 
 
-def battary_power():  # This function returns info about battary charging (True/False)
-    battery = psutil.sensors_battery()
-    bat_power = "Power - <<{}>>".format(battery.power_plugged)
-    return bat_power
-
-
-def info_process():  # This function returns info about system process
-    res = []
-    for proc in psutil.process_iter(
-        ["pid", "name", "username"]
-    ):  # enumerate all processes from a module
-        res.append(proc.info)
-    return res
+# def info_process():  # This function returns info about system process
+#     res = []
+#     for proc in psutil.process_iter(
+#         ["pid", "name", "username"]
+#     ):  # enumerate all processes from a module
+#         res.append(proc.info)
+#     return res
 
 
 # It's function outputting all transferred functions
-def show(
-    cpu=None, memory=None, net=None, secs=None, charge=None, bpower=None, proc=None
-):
-    cpu_title = ("{:^80}").format("CPU information")
-    cpu_sample = ("|{:*^16}" * 4 + "|{:*^16}|").format(
-        "user_time", "system_time", "idle_time", "guest_time", "current"
-    )
-    cpu_tamplate = "|{user_time:_^16}|{sys_time:_^16}|{idle_time:_^16}|{guest_time:_^16}|{current:_^16.5}|"
+# def show(
+#     cpu=None, memory=None, net=None, secs=None, charge=None, bpower=None, proc=None
+# ):
 
-    memory_title = ("{:^80}").format("Memory information")
-    memory_sample = ("|{:*^20}" * 3 + "|{:*^20}|").format(
-        "total_memory", "available_memory", "percentage_usage", "free_memory"
-    )
-    memory_tamplate = "|{total:_^20}|{avail:_^20}|{percent:_^20}|{free:_^20}|"
+#     processes_title = ("{:^120}").format("***All system processes***")
+#     line = "_" * 114
 
-    net_title = ("{:^84}").format("System-wide network In/Out statistics")
-    net_sample = ("|{:*^14}" * 5 + "|{:*^14}|").format(
-        "bytes_sent",
-        "bytes_recv",
-        "packets_sent",
-        "packets_recv",
-        "error_In",
-        "error_Out",
-    )
-    net_tamplate = "|{sent:_^14}|{recv:_^14}|{p_sent:_^14}|{p_recv:_^14}|{errin:_^14}|{errout:_^14}|"
-
-    battary_title = ("{:^54}").format("Battery status information")
-    bat_par = ("|{:<25}" + "{:>25}|").format(charge, secs)
-    electricity = "|{:_^55}|".format(bpower)
-
-    processes_title = ("{:^120}").format("***All system processes***")
-    line = "_" * 114
-
-    print("\n\n")
-    print(cpu_title, cpu_sample, cpu_tamplate.format(**cpu), sep="\n", end="\n\n")
-    print(
-        memory_title,
-        memory_sample,
-        memory_tamplate.format(**memory),
-        sep="\n",
-        end="\n\n",
-    )
-    print(net_title, net_sample, net_tamplate.format(**net), sep="\n", end="\n\n")
-    print(battary_title, bat_par, electricity, sep="\n", end="\n\n\n")
-    print(processes_title, line, sep="\n")
-    for n in proc:
-        output_inf = (
-            "PID {pid:>5} | process name: {name:>50} | user name : {username:>22} |"
-        )
-        print(output_inf.format(**n))
+#     print(processes_title, line, sep="\n")
+#     for n in proc:
+#         output_inf = (
+#             "PID {pid:>5} | process name: {name:>50} | user name : {username:>22} |"
+#         )
+#         print(output_inf.format(**n))
 
 
 def main():
-    cpu_data = cpu_info()
-    memory_data = memory_info()
-    net_data = net_info()
-    battery_charge = battary_power_left()
-    battery_secs = battary_secsleft()
-    batpow = battary_power()
-    info_proc = info_process()
+    cpu = Cpu()
+    cpu.get_data()
+    print(cpu)
 
-    # call the function show() with all methods(functions)
-    show(
-        cpu=cpu_data,
-        memory=memory_data,
-        net=net_data,
-        charge=battery_charge,
-        secs=battery_secs,
-        bpower=batpow,
-        proc=info_proc,
-    )
+    memory = Memory()
+    memory.get_data()
+    print(memory)
+
+    network = Network()
+    network.get_data()
+    print(network)
+
+    battary = Battary()
+    battary.get_data()
+    print(battary)
+
+    process = Process()
+    process.get_data()
+    print(process)
+    process.print_proc()
+
+    # info_proc = info_process()
+
+    # # call the function show() with all methods(functions)
+    # show(
+    #     proc=info_proc,
+    # )
 
 
 if __name__ == "__main__":
